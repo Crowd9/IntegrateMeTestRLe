@@ -1,3 +1,5 @@
+require "digest"
+
 class MailingList
   class APIError < ::StandardError; end
 
@@ -6,7 +8,9 @@ class MailingList
   end
 
   def add_subscriber(details)
-    raw_request.members.create(body: {email_address: details[:email], status: "subscribed"})
+    email = details[:email]
+
+    raw_request.members(email_hash(email)).upsert(body: {email_address: email, status: "subscribed"})
     true
   rescue Gibbon::MailChimpError => e
     raise APIError.new e.body
@@ -23,5 +27,9 @@ class MailingList
   # want to keep the list details in that path.
   def raw_request
     Gibbon::Request.lists(@id)
+  end
+
+  def email_hash(email)
+    Digest::MD5.hexdigest email
   end
 end
