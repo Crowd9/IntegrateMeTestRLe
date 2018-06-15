@@ -5,6 +5,7 @@ class EntriesController < ApplicationController
     @entry = Entry.new(entry_params)
 
     if @entry.save
+      MailingListSubscriberJob.perform_later @entry.id
       render json: {success: true}
     else
       render json: {success: false, errors: @entry.errors}
