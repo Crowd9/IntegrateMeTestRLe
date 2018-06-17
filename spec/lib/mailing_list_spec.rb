@@ -6,16 +6,19 @@ RSpec.describe MailingList do
       before :each do
         # The hash is the lowercase md5 of the email address.
         stub_request(:put, "https://us18.api.mailchimp.com/3.0/lists/123456/members/79005d16381eec2c1195b1f2371f2631")
-          .with(body: hash_including(email_address: "tealc@example.com"))
+          .with(body: hash_including(email_address: "tealc@example.com", merge_fields: {
+            FNAME: "Teal'c", LNAME: "of Chulak"}))
           .to_return(status: 200)
       end
 
       it "returns true" do
-        expect(MailingList.find("123456").add_subscriber(email: "tealc@example.com")).to eq true
+        expect(MailingList.find("123456").add_subscriber(given_name: "Teal'c",
+          family_name: "of Chulak", email: "tealc@example.com")).to eq true
       end
 
       it "does not error when the same address is subscribed multiple times" do
-        2.times { MailingList.find("123456").add_subscriber(email: "tealc@example.com") }
+        2.times { MailingList.find("123456").add_subscriber(given_name: "Teal'c",
+          family_name: "of Chulak", email: "tealc@example.com") }
       end
     end
 

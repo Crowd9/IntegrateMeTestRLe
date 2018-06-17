@@ -10,7 +10,8 @@ class MailingList
   def add_subscriber(details)
     email = details[:email]
 
-    raw_request.members(email_hash(email)).upsert(body: {email_address: email, status: "subscribed"})
+    raw_request.members(email_hash(email)).upsert(body: {email_address: email, status: "subscribed",
+      merge_fields: { FNAME: details[:given_name], LNAME: details[:family_name]}})
     true
   rescue Gibbon::MailChimpError => e
     raise APIError.new e.body
