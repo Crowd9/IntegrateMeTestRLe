@@ -6,7 +6,7 @@
 
     <form name="entry">
       <div id="error_explanation" ng-if="ctrl.errors">
-        Sorry, ther was a problem saving your entry:
+        Sorry, there was a problem saving your entry:
         <ul>
           <li ng-repeat="(field, errors) in ctrl.errors">
             {{field}}:
@@ -16,8 +16,13 @@
       </div>
 
       <p ng-if="ctrl.competition.requires_entry_name">
-        <label for="name">Name</label>
-        <input id="name" name="name" ng-model="ctrl.entry.name">
+        <label for="given_name">Given Name</label>
+        <input id="given_name" name="given_name" ng-model="ctrl.entry.given_name">
+      </p>
+
+      <p ng-if="ctrl.competition.requires_entry_name">
+        <label for="family_name">Family Name</label>
+        <input id="family_name" name="family_name" ng-model="ctrl.entry.family_name">
       </p>
 
       <p>
