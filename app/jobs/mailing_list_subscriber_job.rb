@@ -6,6 +6,7 @@ class MailingListSubscriberJob < ActiveJob::Base
 
     MailingList
       .find(entry.competition.mailing_list_id)
-      .add_subscriber(name: entry.name, email: entry.email)
+      .add_subscriber(given_name: entry.given_name, family_name: entry.family_name,
+        email: entry.email)
   end
 end

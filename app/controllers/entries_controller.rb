@@ -15,6 +15,6 @@ class EntriesController < ApplicationController
   private
     # Never trust parameters from the scary internet, only allow the white list through.
     def entry_params
-      params.require(:entry).permit(:competition_id, :name, :email)
+      params.require(:entry).permit(:competition_id, :given_name, :family_name, :email)
     end
 end

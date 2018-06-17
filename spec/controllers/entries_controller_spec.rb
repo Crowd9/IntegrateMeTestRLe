@@ -9,7 +9,8 @@ RSpec.describe EntriesController do
       it "adds the entry to the competition mailing list" do
         allow(MailingListSubscriberJob).to receive(:perform_later)
 
-        post :create, entry: { competition_id: competition, name: "Daniel Jackson", email: "djackson@example.com" }
+        post :create, entry: { competition_id: competition, given_name: "Daniel",
+          family_name: "Jackson", email: "djackson@example.com" }
 
         entry = Entry.find_by!(email: "djackson@example.com")
         expect(MailingListSubscriberJob).to have_received(:perform_later).with(entry.id)

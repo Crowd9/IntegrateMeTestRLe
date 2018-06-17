@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180615064619) do
+ActiveRecord::Schema.define(version: 20180617055027) do
 
   create_table "competitions", force: :cascade do |t|
     t.string   "name"
@@ -23,10 +23,11 @@ ActiveRecord::Schema.define(version: 20180615064619) do
 
   create_table "entries", force: :cascade do |t|
     t.integer  "competition_id"
-    t.text     "name"
     t.text     "email"
     t.datetime "created_at",     null: false
     t.datetime "updated_at",     null: false
+    t.string   "given_name"
+    t.string   "family_name"
   end
 
   add_index "entries", ["competition_id", "email"], name: "index_entries_on_competition_id_and_email", unique: true

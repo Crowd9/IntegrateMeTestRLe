@@ -9,7 +9,9 @@ Either way, the ID of that mailing list will be stored with the Competition reco
 
 * Secrets support was minimal in Rails 4.2, so I've relied on loading my Mailchimp API key from an ENV var in both dev and production. If using Rails 5 I'd use encrypted secrets, or a library like Figaro.
 
-* At the moment saving the entry name to Mailchimp is not supported.
+* For i18n purposes, I decided against splitting the data entered into the name field, into first and last name components - there's no way to do this totally correctly even in English. Instead, I elected to change the one "Name" field into two - for given name and family name.
+  * I've used naive string splitting for existing data only because I know there isn't any existing data that would fail by doing this :)
+  * Alternatively, Mailchimp could have been configured to store a single "Name" field, but then this would prevent things like addressing emails with just a user's given name.
 
 * Possible optimizations include:
   * Batching subscriptions into groups of a certain size or time range, to save hitting the API too many times
